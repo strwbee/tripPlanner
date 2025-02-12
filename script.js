@@ -109,7 +109,7 @@ function handleNewLocation(snapshot) {
         { autoPan: true, offset: [0, -20] } // moves popup above marker
     );
 
-    markers[data.key] = {marker, category: data.category}; // store for later removal
+    markers[data.key] = {marker, category: data.category, index: locationCount}; // store for later removal
 
     if (selectedCategory === "all" || selectedCategory === data.category) {
         marker.addTo(map);
@@ -124,20 +124,18 @@ function updateLocations() {
     // clear
     locationList.innerHTML = "";
 
-    let count = 1;
     Object.keys(markers).forEach(key => {
         if (selectedCategory === "all" || markers[key].category === selectedCategory) {
             var data = markers[key];
             locationList.insertAdjacentHTML('beforeend', `
                 <div class="locationItem" id="loc-${key}" style="display: flex; align-items: center; gap: 10px;">
-                    <span class="location-index">${count}.</span>
+                    <span class="location-index">${data.index}.</span>
                     <a href="${data.marker.getPopup().getContent().match(/href="(.*?)"/)[1]}" target="_blank">
                         ${data.marker.getPopup().getContent().replace(/<.*?>/g, '')}
                     </a>
                     <button onclick="removeLocation('${key}')" style="margin-left: auto;">Remove</button>
                 </div>
             `);
-            count++;
         }
     });
 }
