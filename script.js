@@ -20,7 +20,7 @@ var map = L.map("map", {
     doubleClickZoom: true, // disable zooming on double click
     touchZoom: true, // disable zooming on touch
     dragging: true // allow panning
-}).setView([51.5080, -0.1232], 13);
+}).setView([51.5100, -0.1232], 13);
 // load map tiles from OpenStreetMap (free map data yay)
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 
