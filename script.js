@@ -20,7 +20,7 @@ var map = L.map("map", {
     doubleClickZoom: true, // disable zooming on double click
     touchZoom: true, // disable zooming on touch
     dragging: true // allow panning
-}).setView([51.5100, -0.1232], 13);
+}).setView([51.512, -0.125], 13);
 // load map tiles from OpenStreetMap (free map data yay)
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 
@@ -89,14 +89,19 @@ function handleNewLocation(snapshot) {
     var data = snapshot.val();
     var locationCount = Object.keys(markers).length + 1;
 
+    // food categories have pink marker
+    const isPink = ["cafe", "dinner", "market"].includes(data.category.toLowerCase());
+    const markerColor = isPink? "#f09c9c" : "#4c95d4";
+    const borderColor = isPink ? "#a34f4f" : "#2b6597";
+
     // custom marker with a location index inside
     var marker = L.marker([data.lat, data.lng], {
         icon: L.divIcon({
             className: "custom-marker",
             html: `
-                <div style="position: relative; width: 25px; height: 25px; background-color:#4c95d4;
+                <div style="position: relative; width: 25px; height: 25px; background-color:${markerColor};
                             border-radius: 50%; display: flex; align-items: center; justify-content: center;
-                            color: white; font-weight: bold; font-size: 12px; border: 2px solid #2b6597;">
+                            color: white; font-weight: bold; font-size: 12px; border: 2px solid ${borderColor};">
                     ${locationCount}
                 </div>`,
             iconSize: [25, 25],
